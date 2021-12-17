@@ -1,0 +1,74 @@
+{% extends  'music/base.html'   %}
+{%   block content  %}
+<div class="modal-dialog" >
+
+        <div class="modal-content m-5 p-5" style="background-color:#f8f9fa!important">
+                <a href="{% url 'music:addsong' %}"> <button type="submit" class="btn btn-success btn-lg btn-block">Add Song</button></a>
+                {% for i in p %}
+
+                <div class="card mb-3" style="max-width: 540px;">
+                    <div class="row g-0">
+                        <div class="col-md-6">
+                            <img src="{{i.image.url}}" style="height:100%;width:100%" alt="...">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card-body">
+                                <h5 style="text-align: center;color:black" class="card-title">Title:{{i.title}}</h5>
+                                <h5 style="color:black;text-align:center" class="card-text">Author:{{i.author}}</h5>
+                                <h5 style="color:black;text-align:center" class="card-text">Views:{{i.views}}</h5>
+                                <h5 style="color:black;text-align:center" class="card-text">Category:{{i.category}}</h5>
+                                <a href="{% url 'music:edit' i.id %}"><button style="margin-left:10%;width:60px;height:auto;">Edit</button></a>
+                                <a href="{% url 'music:delete' i.id %}"><button style="width:60px;height:auto;">Delete</button></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+        <div class="pagination" style="margin:0 auto;">
+            <span class="step-links">
+                {% if p.has_previous %}
+                    <a href="?page={{ p.previous_page_number }}">Previous</a>
+                {% endif %}
+            </span>
+
+            <span class="current">
+                Page {{ p.number }} of {{ p.paginator.num_pages }}.
+            </span>
+
+            <span>
+                {% if p.has_next %}
+                    <a href="?page={{ p.next_page_number }}">Next</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" >
+        <div class="modal-content m-5 p-5" style="background-color:#343a40">
+
+            {% for song in history %}
+            <div class="card mb-3" style="max-width: 540px;" >
+                <div class="row g-0" style="background-color:#f8f9fa!important" >
+                    <div class="col-md-6">
+                        <input type="hidden" name="song_id" value="{{song.id}}">
+                                            <a href="{% url 'music:song' song.id %}"><button>
+                                                <img src="{{song.image.url }}" style="height:100%;width:100%"></button></a>
+                    </div>
+                    <div class="col-md-6" style="background-color:#f8f9fa!important">
+                        <div class="card-body">
+                            <h5 style="text-align: center;color:black" class="card-title">Title:{{song.title}}</h5>
+                            <h5 style="color:black;text-align:center" class="card-text">Author:{{song.author}}</h5>
+                            <h5 style="color:black;text-align:center" class="card-text">Views:{{song.views}}</h5>
+                            <h5 style="color:black;text-align:center" class="card-text">Category:{{song.category}}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

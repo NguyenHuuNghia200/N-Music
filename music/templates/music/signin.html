@@ -1,0 +1,71 @@
+{% extends  'music/base.html'   %}
+{%   block content  %}
+<div class= "container-fluid">
+<div class="signup-form">
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+        	<input type="text" class="form-control" name="username" placeholder="Username" required="required">
+            {% if m is False %}
+            <p>Username is uncorret</p>
+            {% endif %}
+
+        </div>
+
+        <div class="form-group">
+            <input type="password" class="form-control" name="password" placeholder="Password" required="required">
+            {% if m is  Trsue %}
+            <p>Password is uncorret</p>
+            {% endif %}
+            {{m1}}
+        </div>
+
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-success btn-lg btn-block">Login</button>
+        </div>
+
+    </form>
+	<div class="text-center">Already have an account? <a href="#">Sign in</a></div>
+</div>
+</div>
+
+{% endblock %}
+
+<form  action="" method="post">
+    {% csrf_token %}
+    {% for k in form %}
+
+    {{k.label}}
+    <div class="form-group">
+            {{k}}
+
+    </div>
+
+    {{k.heslp_text}}
+    {{k.errors}}
+
+
+    {% endfor %}
+    <button type="submit">Sign up</button>
+  </form>
+
+
+
+
+<form action="" method="post">
+        {% csrf_token %}
+        {% for i in f%}
+        <div class="form-group">
+			{{i.label}}
+
+		</div>
+        <div class="form-group">
+			{{i}}
+		</div>
+        {% endfor %}
+        <div class="form-group">
+            <button type="submit" class="btn btn-success btn-lg btn-block">Login</button>
+        </div>
+
+    </form>

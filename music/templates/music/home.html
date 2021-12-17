@@ -1,0 +1,150 @@
+{% extends  'music/base.html'   %}
+{%   block content  %}
+    <div class= "container-fluid">
+        <div style="float:left;width:70%;background-color:blsue">
+            <div class= "row">
+                <h1 style="margin-lesft:12px;color:black">Bai Hat</h1>
+                   {% for i in s %}
+
+                  <div class ="col-12 col-sm-6 col-md-4 ">
+
+                            <div class="feature">
+                                <figure class="cut-corner">
+                                        {% if user.is_authenticated %}
+                                        <form action="{% url 'music:history' %}" method="post">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="song_id" value="{{i.id}}">
+                                            <a href="{% url 'music:song' i.id %}"><button>
+                                                <img src="{{i.image.url }}" style="height:150px;width:150px"></button></a>
+                                        </form>
+                                        {% else %}
+                                            <a href="{% url 'music:song' i.id %}">
+                                                <img src="{{i.image.url }}" style="height:150px;width:150px"></a>
+                                        {% endif %}
+                                </figure>
+                                <h5 class="feature-title" style="width:auto;color:black">{{i.title }}</h5>
+
+                                <h5 class="feature-title" style="width:auto;color:black">{{i.author }}</h5>
+                            </div> <!-- .feature -->
+
+                  </div>
+
+                   {% endfor %}
+
+            </div>
+        </div>
+        <div style="float:left;width:30%;background-color:resd;margin-left:" >
+            <h1 style="margin-left:10px;color:black">Top View</h1>
+            {% for i in top %}
+
+                  <div class ="col-12 col-sm-6 col-md-12 ">
+
+                            <div class="feature">
+                                <figure class="cut-corner">
+                                        {% if user.is_authenticated %}
+                                        <form action="{% url 'music:history' %}" method="post">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="song_id" value="{{i.id}}">
+                                            <a href="{% url 'music:song' i.id %}"><button>
+                                                <img src="{{i.image.url }}" style="height:150px;width:150px"></button></a>
+                                        </form>
+                                        {% else %}
+                                            <a href="{% url 'music:song' i.id %}">
+                                                <img src="{{i.image.url }}" style="height:150px;width:150px"></a>
+                                        {% endif %}
+                                </figure>
+                                <h5 class="feature-title" style="width:auto;color:black">{{i.title }}</h5>
+                                <h5 class="feature-title" style="width:auto;color:black">{{i.author }}</h5>
+                            </div> <!-- .feature -->
+
+                  </div>
+
+                   {% endfor %}
+        </div>
+
+    </div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" >
+        <div class="modal-content m-5 p-5" style="background-color:#343a40">
+
+            {% for song in history %}
+            <div class="card mb-3" style="max-width: 540px;" >
+                <div class="row g-0" style="background-color:#f8f9fa!important" >
+                    <div class="col-md-6">
+                        <input type="hidden" name="song_id" value="{{song.id}}">
+                                            <a href="{% url 'music:song' song.id %}"><button>
+                                                <img src="{{song.image.url }}" style="height:100%;width:100%""></button></a>
+                    </div>
+                    <div class="col-md-6" style="background-color:#f8f9fa!important">
+                        <div class="card-body">
+                            <h5 style="text-align: center;color:black" class="card-title">Title:{{song.title}}</h5>
+                            <h5 style="color:black;text-align:center" class="card-text">Author:{{song.author}}</h5>
+                            <h5 style="color:black;text-align:center" class="card-text">Views:{{song.views}}</h5>
+                            <h5 style="color:black;text-align:center" class="card-text">Category:{{song.category}}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+{% endblock %}
+
+
+<h4>Gallery</h4>
+
+       <div class= "row">
+           {% for i in s %}
+
+          <div class ="col-12 col-sm-6 col-md-4 ">
+                <div class="col-12 col-sm-6 col-md-4">
+                    <div class="feature">
+                        <figure class="cut-corner">
+                            <img src="{{i.image.url }}" style="height:200px;width:200px>
+                        </figure>
+                        <h3 class="feature-title">{{i.title }}</h3>
+                        <p>{{i.author }}</p>
+                    </div> <!-- .feature -->
+                </div>
+          </div>
+           {% endfor %}
+           {% for i in s %}
+
+          <div class ="col-12 col-sm-6 col-md-4 ">
+                <div class="col-md-4">
+                    <div class="feature">
+                        <figure class="cut-corner">
+                            <img src="{{i.image.url }}" style="height:200px;width:200px>
+                        </figure>
+                        <h3 class="feature-title">{{i.title }}</h3>
+                        <p>{{i.author }}</p>
+                    </div> <!-- .feature -->
+                </div>
+          </div>
+           {% endfor %}
+       </div>
+
+
+{% for i in s %}
+
+                  <div class ="col-12 col-sm-6 col-md-4 ">
+                        <div class="col-md-4">
+                            <div class="feature">
+                                <figure class="cut-corner">
+                                    <img src="{{i.image.url }}" style="height:150px;width:150px">
+                                </figure>
+                                <h3 class="feature-title">{{i.title }}</h3>
+                                <p>{{i.author }}</p>
+                            </div> <!-- .feature -->
+                        </div>
+                  </div>
+                   {% endfor %}

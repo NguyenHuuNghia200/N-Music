@@ -1,0 +1,51 @@
+{% extends  'music/base.html'   %}
+{%   block content  %}
+
+<div class="signup-form">
+
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+            data-bs-whatever="@mdo">Open modal for @mdo
+    </button>
+
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                {% for i in s %}
+                <div class="card mb-3" style="max-width: 540px;">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="{{i.image.url}}" style="height:150px;width:150px" alt="...">
+                        </div>
+                        <div class="col-md-8"">
+                            <div class="card-body">
+                                <h5 style="text-align: center;" class="card-title">{{i.title}}</h5>
+                                <p class="card-text"><small class="text-muted">{{i.author}}</small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+{% endblock %}
+
+if request.user is not None:
+history=history_listen.objects.filter(user=request.user)
+
+array_song=[]
+for i in history:
+song=Song.objects.get(pk=i.Song_id)
+array_song.append(song)
+return render(request,'music/history.html',{'s':array_song})
+else:
+if request.user is None:
+return redirect('/home')

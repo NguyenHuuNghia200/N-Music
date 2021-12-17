@@ -1,0 +1,48 @@
+{% extends  'music/base.html'   %}
+{%   block content  %}
+<div class="signup-form">
+    <form action="" method="post">
+        {% csrf_token %}
+        {% for k in form %}
+            <div class="form-group">
+                {{k.label}}
+                {{k}}
+                {{k.heslp_text}}
+                {{k.errors}}
+            </div>
+        {% endfor %}
+        <div class="form-group">
+            <button type="submit" class="btn btn-success btn-lg btn-block">Register Now</button>
+        </div>
+    </form>
+
+	<div class="text-center">Already have an account? <a href="#">Sign in</a></div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" >
+        <div class="modal-content m-5 p-5" style="background-color:#343a40">
+
+            {% for song in history %}
+            <div class="card mb-3" style="max-width: 540px;" >
+                <div class="row g-0" style="background-color:#f8f9fa!important" >
+                    <div class="col-md-6">
+                        <input type="hidden" name="song_id" value="{{song.id}}">
+                                            <a href="{% url 'music:song' song.id %}"><button>
+                                                <img src="{{song.image.url }}" style="height:100%;width:100%"></button></a>
+                    </div>
+                    <div class="col-md-6" style="background-color:#f8f9fa!important">
+                        <div class="card-body">
+                            <h5 style="text-align: center;color:black" class="card-title">Title:{{song.title}}</h5>
+                            <h5 style="color:black;text-align:center" class="card-text">Author:{{song.author}}</h5>
+                            <h5 style="color:black;text-align:center" class="card-text">Views:{{song.views}}</h5>
+                            <h5 style="color:black;text-align:center" class="card-text">Category:{{song.category}}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

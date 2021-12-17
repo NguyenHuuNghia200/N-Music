@@ -1,0 +1,41 @@
+{% extends  'music/base.html'   %}
+{%   block content  %}
+<div class="signup-form">
+    <form action="" method="post">
+        {% csrf_token %}
+        {% for k in form %}
+            <div class="form-group">
+                {{k.label}}
+                {{k}}
+                {{k.heslp_text}}
+                {{k.errors}}
+            </div>
+        {% endfor %}
+        <div class="form-group">
+            <button type="submit" class="btn btn-success btn-lg btn-block">Register Now</button>
+        </div>
+    </form>
+
+	<div class="text-center">Already have an account? <a href="#">Sign in</a></div>
+</div>
+
+
+{% endblock %}
+
+<form  action="" method="post">
+    {% csrf_token %}
+    {% for k in form %}
+
+    {{k.label}}
+    <div class="form-group">
+            {{k}}
+
+    </div>
+
+    {{k.heslp_text}}
+    {{k.errors}}
+
+
+    {% endfor %}
+    <button type="submit">Sign up</button>
+  </form>

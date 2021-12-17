@@ -1,0 +1,112 @@
+{% extends  'music/base.html'   %}
+
+{%   block content  %}
+<div class= "container-fluid">
+        <div style="float:left;width:70%;background-color:blsue">
+            <article>
+                <h3 style="text-align: left;color:black;margin-left:15px;" class="card-title">Title:{{i.title}}</h3>
+                <h3 style="color:black;text-align:left;margin-left:15px;" class="card-text">Author:{{i.author}}</h3>
+
+
+                <div class="player">
+                        <div class="player__loading">
+                            <img src="{{i.image.url }}" style="height:100%;width:100%">
+                        </div>
+                        <audio id="player__source" src="/media/{{i.audio_link}}" type="audio/mpeg">
+                        <p>Trình duyệt của bạn không hỗ trợ HTML5 Audio</p>
+                        </audio>
+                        <div class="player__control">
+                            <button id="playPause" class="player--play icon-play"></button>
+                        <span id="currentTime">00:00</span>
+                         <input id="seek" class="player--seek" type="range" min="0" value="0">
+                        <span id="durationTime">00:00</span>
+                            <button id="muted" class="player--volumn icon-volume-high"></button>
+                        </div>
+                </div>
+                <h5 style="color:black;text-align:left;margin-left:15px;" class="card-text">Views:{{i.views}}</h5>
+                <h5 style="color:black;text-align:left;margin-left:15px;" class="card-text">Category:{{i.category}}</h5>
+            </article>
+        </div>
+        <div style="float:left;width:30%;background-color:resd;margin-left:" >
+            <div style="margin-bottom:50px;height:auto;width:auto;">
+                <h3 style="color:black;margin-left:15px">Cung The Loai</h3>
+            </div>
+            {% for i in cate %}
+
+                  <div class ="col-12 col-sm-6 col-md-12">
+
+                            <div class="feature">
+                                <figure class="cut-corner">
+                                        {% if user.is_authenticated %}
+                                        <form action="{% url 'music:history' %}" method="post">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="song_id" value="{{i.id}}">
+                                            <a href="{% url 'music:song' i.id %}"><button>
+                                                <img src="{{i.image.url }}" style="height:150px;width:150px"></button></a>
+                                        </form>
+                                        {% else %}
+                                            <a href="{% url 'music:song' i.id %}">
+                                                <img src="{{i.image.url }}" style="height:150px;width:150px"></a>
+                                        {% endif %}
+                                </figure>
+                                <h5 class="feature-title" style="width:auto;color:black">{{i.title }}</h5>
+                                <h5 class="feature-title" style="width:auto;color:black">{{i.author }}</h5>
+                            </div> <!-- .feature -->
+
+                  </div>
+
+                   {% endfor %}
+        </div>
+
+</div>
+
+
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" >
+        <div class="modal-content m-5 p-5" style="background-color:#343a40">
+
+            {% for song in history %}
+            <div class="card mb-3" style="max-width: 540px;" >
+                <div class="row g-0" style="background-color:#f8f9fa!important" >
+                    <div class="col-md-6">
+                        <img src="{{song.image.url}}" style="height:100%;width:100%" alt="...">
+                    </div>
+                    <div class="col-md-6" style="background-color:#f8f9fa!important">
+                        <div class="card-body">
+                            <h5 style="text-align: center;" class="card-title">{{song.title}}</h5>
+
+                            <p>
+                            <p  style="text-align: center;" class="card-text"><small class="text-muted">{{song.author}}</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{%    endblock    %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    {% for i in s %}
+        <img src="{{i.image.url }}">
+    <audio controls>
+        <source  src="/media/{{i.audio_link}}" type="audio/mpeg" style="weight:3000px;">
+    </audio>
+    <embed src="/media/{{i.audio_link}}" type="audio/ogg">
+    {% endfor%}
